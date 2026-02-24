@@ -4,3 +4,8 @@
 - Host: Hostinger
 - OS: Ubuntu 24.04
 - Docker: Docker version 29.1.3, build f52814d
+
+# Readme
+Follow these instructions whenever changing functionality
+
+- update the readme to reflect the current feature set and necessary instructions

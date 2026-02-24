@@ -4,12 +4,12 @@ A lightweight Playwright-based HTTP server that renders JavaScript-heavy pages a
 
 ## Why?
 
-n8n's built-in HTTP Request node has its limitations- no js execution, easily detected by anti scraper techniques
+n8n's built-in HTTP Request node has its limitations
 
 ## Features
 
 - **Headless WebKit** — lightweight alternative to Chromium
-- **Anti-bot stealth** — spoofed user agent, navigator properties, and canvas fingerprinting
+- **Browser-realistic requests** — pages see a real browser environment, reducing blocked or incomplete responses
 - **Concurrency limiting** — caps parallel browser contexts to avoid CPU spikes
 - **Optional JS evaluation** — run arbitrary JavaScript on the page and get the result back
 - **Resource blocking** — skips images, fonts, stylesheets, and media for faster responses
