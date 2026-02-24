@@ -106,15 +106,6 @@ Render a URL and return the HTML. See parameters above.
 
 Health check endpoint. Returns `{"status": "ok"}`.
 
-## Deployment
-
-Copy `deploy-server.bat.example` (Windows) or `deploy-server-local.sh.example` (Linux/Mac) and fill in your VPS details:
-
-```bash
-cp deploy-server-local.sh.example deploy-server-local.sh
-# Edit deploy-server-local.sh with your VPS IP and credentials
-```
-
 ## License
 
 MIT
