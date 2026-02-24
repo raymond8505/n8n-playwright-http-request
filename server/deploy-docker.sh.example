@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# Set these via environment variables in production
+DOCKER_NETWORK=${DOCKER_NETWORK:-n8n_default}
+
+echo -e "${YELLOW}Stopping old container...${NC}"
+docker stop playwright-scraper 2>/dev/null || echo "No container to stop"
+
+echo -e "${YELLOW}Removing old container...${NC}"
+docker rm playwright-scraper 2>/dev/null || echo "No container to remove"
+
+echo -e "${YELLOW}Building new image...${NC}"
+docker build -t playwright-scraper .
+
+if [ $? -eq 0 ]; then
+    echo -e "${YELLOW}Starting new container...${NC}"
+    docker run -d --name playwright-scraper -v /home/playwright/server.js:/app/server.js --network $DOCKER_NETWORK playwright-scraper
+
+    echo -e "${YELLOW}Waiting for container to start...${NC}"
+    sleep 3
+
+    echo -e "${GREEN}Checking health...${NC}"
+    docker exec playwright-scraper curl -s http://localhost:3000/health
+
+    echo -e "\n${GREEN}Deployment complete!${NC}"
+    echo -e "${YELLOW}View logs with: docker logs -f playwright-scraper${NC}"
+else
+    echo -e "${RED}Build failed!${NC}"
+    exit 1
+fi

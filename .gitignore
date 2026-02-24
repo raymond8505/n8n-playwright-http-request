@@ -1,0 +1,7 @@
+*.bat
+deploy-docker.sh
+node_modules
+*.fixture.*
+deploy-server-local.sh
+response.html
+.claude/settings.*

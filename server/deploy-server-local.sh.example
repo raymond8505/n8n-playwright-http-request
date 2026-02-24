@@ -1,0 +1,15 @@
+#!/bin/bash
+# Copy this to deploy-server-local.sh and fill in your VPS details
+# This file is NOT tracked in git
+
+VPS_IP="your.vps.ip.here"
+VPS_USER="root"
+VPS_PATH="/home/playwright"
+
+echo "Deploying to $VPS_USER@$VPS_IP:$VPS_PATH..."
+tar czf - --exclude-from=.gitignore --exclude=.git . | ssh $VPS_USER@$VPS_IP "rm -rf $VPS_PATH && mkdir -p $VPS_PATH && cd $VPS_PATH && tar xzf -"
+
+echo "Running docker build and deploy..."
+ssh $VPS_USER@$VPS_IP "cd $VPS_PATH && chmod +x deploy-docker.sh && ./deploy-docker.sh"
+
+echo "Deployment complete!"

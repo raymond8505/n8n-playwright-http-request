@@ -1,0 +1,24 @@
+{
+  "name": "playwright-server",
+  "version": "1.0.0",
+  "description": "Playwright-based web scraping server",
+  "main": "server.js",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/raymond8505/n8n-playwright-http-request"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "server:deploy:full": "deploy-server.bat",
+    "server:deploy:quick": "deploy-server.bat quick",
+    "docker:deploy": "./deploy-docker.sh",
+    "health": "curl http://localhost:3000/health",
+    "logs": "docker logs -f playwright-scraper",
+    "scrape": "node -e \"const u=process.argv[1]; if(!u){console.error('Usage: npm run scrape -- <url>');process.exit(1);} const http=require('http'),fs=require('fs'),body=JSON.stringify({url:u}); const req=http.request({hostname:'localhost',port:3000,path:'/fetch',method:'POST',headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(body)}},res=>{let d='';res.on('data',c=>d+=c);res.on('end',()=>{try{const j=JSON.parse(d);if(j.html){const f='response.html';fs.writeFileSync(f,j.html);console.log('Saved to '+f+' (title: '+j.title+')');}else{console.error('Error:',d);}}catch(e){console.error('Parse error:',e.message);}});});req.on('error',e=>console.error('Request failed:',e.message));req.write(body);req.end();\" --"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "playwright": "^1.40.0"
+  }
+}

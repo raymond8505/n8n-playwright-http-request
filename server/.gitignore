@@ -1,0 +1,6 @@
+*.bat
+node_modules
+*.fixture.*
+deploy-server-local.sh
+.env*
+response.html
